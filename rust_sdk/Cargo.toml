@@ -1,0 +1,27 @@
+[workspace]
+members = [
+    # 业务层
+    "core",
+    "logging",
+
+    # ffi 层
+    "sdk-java", "sdk-lib",
+]
+
+
+resolver = "2"
+
+[profile.dev]
+debug = true
+split-debuginfo = "packed"
+
+[profile.release]
+lto = true
+opt-level = "s"
+debug = true
+codegen-units = 1
+split-debuginfo = "packed"
+
+
+
+

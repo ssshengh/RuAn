@@ -1,0 +1,12 @@
+[target.x86_64-apple-darwin]
+rustflags = ["-C", "link-arg=-mmacosx-version-min=10.11"]
+
+[alias]
+xt = "run --bin=task --"
+
+
+[target.aarch64-unknown-linux-gnu]
+linker = "aarch64-linux-gnu-gcc"
+
+[target.mips64-unknown-linux-gnuabi64]
+linker = "mips64-linux-gnuabi64-gcc"

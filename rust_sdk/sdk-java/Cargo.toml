@@ -1,0 +1,17 @@
+[package]
+name = "sdk-java"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+jni = "0.21.1"
+log = "0.4.21"
+anyhow = "1.0.86"
+logging = { path = "../logging"}
+
+# 产物相关：https://doc.rust-lang.org/reference/linkage.html
+[lib]
+name = "jni_sdk"
+crate-type = ["staticlib", "cdylib", "lib"]

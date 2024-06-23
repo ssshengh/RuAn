@@ -1,0 +1,59 @@
+# 文档：https://just.systems/man/zh/chapter_18.html
+# 速查手册：https://cheatography.com/linux-china/cheat-sheets/justfile/
+
+# 编译 flavor，可以为 release 或者 debug，外部可以设置
+flavor := "release"
+
+# 产物名称
+pkg_name := "libjni_sdk"
+
+
+# ----安卓 target 以及对应的存放目录----
+android_jni_lib := "../sdkbridge/src/main/jniLibs/"      # 安卓 jni 文件目录
+
+aarch64 := "aarch64-linux-android"
+aarch64_path := "./target/" + aarch64 + "/release/" + pkg_name + ".so"
+aarch64_target_path := android_jni_lib + "arm64-v8a"
+
+i686 := "i686-linux-android"
+i686_path := "./target/" + i686 + "/release/" + pkg_name + ".so"
+i686_target_path := android_jni_lib + "x86"
+
+arm := "armv7-linux-androideabi"
+arm_path := "./target/" + arm + "/release/" + pkg_name + ".so"
+arm_target_path := android_jni_lib + "armabi"
+# -----------------------------------
+
+
+infos:
+    @echo "[--] This is a justfile which build sdk-ffi binary file, like makefile."
+
+build_android_info:
+
+
+build_android_aarch64_release:
+    @echo "Build android aarch64 binary"
+    cargo build --target {{aarch64}} --{{flavor}}
+    cp {{aarch64_path}} {{aarch64_target_path}}
+
+build_android_aarch64_debug:
+    @echo "Build android aarch64 binary"
+    cargo build --target {{aarch64}}
+    cp {{aarch64_path}} {{aarch64_target_path}}
+
+build_android_all_release: && cp_binary
+    @echo "Build full android binary"
+    cargo build --target {{aarch64}} --{{flavor}}
+    cargo build --target {{i686}} --{{flavor}}
+    cargo build --target {{arm}} --{{flavor}}
+
+build_android_all_debug: && cp_binary
+    @echo "Build full android binary"
+    cargo build --target {{aarch64}}
+    cargo build --target {{i686}}
+    cargo build --target {{arm}}
+
+cp_binary:
+    cp {{aarch64_path}} {{aarch64_target_path}}
+    cp {{i686_path}} {{i686_target_path}}
+    cp {{arm_path}} {{arm_target_path}}
